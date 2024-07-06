@@ -1,0 +1,61 @@
+name: Main
+
+on:
+  push:
+    branches: []
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build-react:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          cd react
+          yarn install
+
+      - name: Styling
+        run: |
+          cd react
+          yarn run format
+
+      - name: Build
+        run: |
+          cd react 
+          yarn run build
+
+
+  build-angular:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          cd angular
+          yarn install
+
+      - name: Styling
+        run: |
+          cd angular
+          yarn run format
+
+      - name: Build
+        run: |
+          cd angular
+          yarn run build:ci
